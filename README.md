@@ -2,6 +2,10 @@
 
 Application for managing your funds. Divided on wallets. Stock quotes fetching one time per day.
 
+## Demo
+
+https://dkobak-my-funds.s3.eu-central-1.amazonaws.com/index.html
+
 ## Project Setup
 
 ```sh
