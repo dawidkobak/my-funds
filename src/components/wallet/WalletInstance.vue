@@ -16,10 +16,12 @@
             :caption="asset.caption"
             :number="asset.number"
             :color="asset.color"
+            :text="asset.text"
             :total="total"
             @caption-updated="(e) => changeAssetCaption(asset.id, e)"
             @number-updated="(e) => changeAssetNumber(asset.id, e)"
             @color-updated="(e) => changeAssetColor(asset.id, e)"
+            @text-updated="(e) => textUpdated(asset.id, e)"
           />
         </div>
 
@@ -36,14 +38,14 @@
       </div>
 
       <div>
-        <Doughnut :data="computedData" :options="options" />
+        <Doughnut :data="chartData" :options="options" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, toRef } from 'vue'
+import { computed, ref, toValue } from 'vue'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 import WalletAsset from '../wallet/WalletAsset.vue'
@@ -51,8 +53,7 @@ import PlusIcon from '../icons/PlusIcon.vue'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const assetsRef = toRef(props.initialData)
-const currentAssets = ref(assetsRef.value)
+const currentAssets = ref(toValue(props.initialData))
 
 const total = computed(() =>
   currentAssets.value.map((asset) => parseFloat(asset.number)).reduce((x, y) => x + y, 0.0)
@@ -71,9 +72,9 @@ const props = defineProps({
   }
 })
 
-const computedData = computed(() => {
+const chartData = computed(() => {
   return {
-    labels: currentAssets.value.map((asset) => asset.caption),
+    labels: currentAssets.value.map((asset) => asset.text),
     datasets: [
       {
         backgroundColor: currentAssets.value.map((asset) => asset.color),
@@ -121,5 +122,18 @@ const addAsset = () => {
   ]
 }
 
-const emit = defineEmits(['assetCaptionChanged', 'assetValueChanged', 'assetColorChanged'])
+const textUpdated = (assetId, newText) => {
+  const asset = currentAssets.value.find((a) => a.id === assetId)
+  if (asset) {
+    asset.text = newText
+    emit('assetTextUpdated', assetId, newText)
+  }
+}
+
+const emit = defineEmits([
+  'assetCaptionChanged',
+  'assetValueChanged',
+  'assetColorChanged',
+  'assetTextUpdated'
+])
 </script>

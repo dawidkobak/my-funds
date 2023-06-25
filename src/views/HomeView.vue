@@ -1,7 +1,6 @@
 <template>
   <main class="flex w-full items-center">
     <div class="sm:w-full xl:w-lg mx-auto">
-      <MyColorPicker />
       <div class="mt-5">
         <MyFundsLogo />
       </div>
@@ -16,6 +15,7 @@
         @asset-caption-changed="(e) => changeAssetCaption(longTermFund, e)"
         @asset-number-changed="(e) => changeAssetNumber(longTermFund, e)"
         @asset-color-changed="(e) => changeAssetColor(longTermFund, e)"
+        @asset-text-updated="(assetId, text) => changeAssetText(longTermFund, assetId, text)"
       />
 
       <WalletInstance
@@ -35,42 +35,41 @@ import { computed, ref } from 'vue'
 import MyFundsLogo from '../components/branding/MyFundsLogo.vue'
 import WalletInstance from '../components/wallet/WalletInstance.vue'
 import WalletSummary from '../components/wallet/WalletSummary.vue'
-import MyColorPicker from '../components/shared/MyColorPicker.vue'
 
 const longTermFund = ref([
   {
     id: '82d88c4a-1235-11ee-be56-0242ac120002',
-    caption: 'EMIM',
+    text: 'EMIM',
     number: 6456.9,
     color: '#1cfc76'
   },
   {
     id: '82d88ede-1235-11ee-be56-0242ac120002',
-    caption: 'SGLN',
+    text: 'SGLN',
     number: 4343.76,
     color: '#fcf11c'
   },
   {
     id: '82d89028-1235-11ee-be56-0242ac120002',
-    caption: 'XFVT',
+    text: 'XFVT',
     number: 9157.19,
     color: '#d41c1c'
   },
   {
     id: '82d8914a-1235-11ee-be56-0242ac120002',
-    caption: 'SWIG 80',
+    text: 'SWIG 80',
     number: 4234.0,
     color: '#e4090a'
   },
   {
     id: '82d8951e-1235-11ee-be56-0242ac120002',
-    caption: 'Bitcoin',
+    text: 'Bitcoin',
     number: 15298.68,
     color: '#f89414'
   },
   {
     id: '82d8965e-1235-11ee-be56-0242ac120002',
-    caption: 'Intel',
+    text: 'Intel',
     number: 4113.33,
     color: '#187cc4'
   }
@@ -79,13 +78,13 @@ const longTermFund = ref([
 const emergencyFund = ref([
   {
     id: '82d89780-1235-11ee-be56-0242ac120002',
-    caption: 'Obligacje',
+    text: 'Obligacje',
     number: 17381.78,
     color: '#202474'
   },
   {
     id: '82d89a80-1235-11ee-b446-0242ac120002',
-    caption: 'Gotówka',
+    text: 'Gotówka',
     number: 8381.78,
     color: '#ff24f0'
   }
@@ -114,6 +113,14 @@ const changeAssetColor = (funds, event) => {
   const fund = funds.find((fund) => fund.id === event.assetId)
   if (fund) {
     fund.color = event.color
+  }
+}
+
+const changeAssetText = (funds, assetId, text) => {
+  console.log(`assetId: ${assetId} text: ${text}`)
+  const fund = funds.find((fund) => fund.id === assetId)
+  if (fund) {
+    fund.text = text
   }
 }
 </script>

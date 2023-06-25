@@ -1,11 +1,45 @@
 <template>
   <div>
-    <Vue3ColorPicker />
+    <Vue3ColorPicker :pureColor="currentColor" @pure-color-change="setCurrentColor" />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, toValue, watch } from 'vue'
+const currentColor = ref(toValue(props.pureColor))
+
+const setCurrentColor = (rbgStr) => {
+  const colorRegexp = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/
+  const match = colorRegexp.exec(rbgStr)
+  if (match !== null) {
+    currentColor.value = {
+      r: match[1],
+      g: match[2],
+      b: match[3]
+    }
+  }
+}
+
+const props = defineProps({
+  pureColor: {
+    type: Object,
+    required: false,
+    default: () => {
+      return {
+        r: 0,
+        g: 0,
+        b: 0
+      }
+    }
+  }
+})
+
+watch(currentColor, () => {
+  const rgbStr = `rgb(${currentColor.value.r}, ${currentColor.value.g}, ${currentColor.value.b})`
+  emit('colorUpdated', rgbStr)
+})
+
+const emit = defineEmits(['colorUpdated'])
 </script>
 
 <style scoped>
