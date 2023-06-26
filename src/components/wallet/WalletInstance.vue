@@ -38,7 +38,7 @@
       </div>
 
       <div>
-        <Doughnut :data="chartData" :options="options" />
+        <Doughnut :data="chartData" />
       </div>
     </div>
   </div>

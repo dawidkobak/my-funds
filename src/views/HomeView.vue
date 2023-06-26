@@ -18,6 +18,8 @@
         @asset-text-updated="(assetId, text) => changeAssetText(longTermFund, assetId, text)"
       />
 
+      <StockChart />
+
       <WalletInstance
         wallet-name="Poduszka finansowa"
         :initial-data="emergencyFund"
@@ -35,6 +37,7 @@ import { computed, ref } from 'vue'
 import MyFundsLogo from '../components/branding/MyFundsLogo.vue'
 import WalletInstance from '../components/wallet/WalletInstance.vue'
 import WalletSummary from '../components/wallet/WalletSummary.vue'
+import StockChart from '../components/charts/StockChart.vue'
 
 const longTermFund = ref([
   {
