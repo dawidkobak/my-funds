@@ -24,37 +24,43 @@
       </div>
     </div>
   </div>
-  <div class="flex w-full" v-for="(subAmount, index) in subAmounts" :key="index">
-    <div class="w-4/12">
-      <div class="ml-6">
-        <InputComp
-          type="text"
-          width-full
-          :value="subAmount.text"
-          @updated-input="text = setSubAmountText(text, index)"
-        />
+  <div v-if="props.withSubAmounts">
+    <div class="flex w-full" v-for="(subAmount, index) in subAmounts" :key="index">
+      <div class="w-4/12">
+        <div class="ml-6">
+          <InputComp
+            type="text"
+            width-full
+            :value="subAmount.text"
+            @updated-input="(text) => setSubAmountText(text, index)"
+          />
+        </div>
       </div>
-    </div>
-    <div class="w-2/12">
-      <div class="mx-2">
-        <InputComp
-          type="number"
-          width-full
-          :value="subAmount.value"
-          @updated-input="(value) => setSubAmount(value, index)"
-        />
+      <div class="w-2/12">
+        <div class="mx-2">
+          <InputComp
+            type="number"
+            width-full
+            :value="subAmount.value"
+            @updated-input="(value) => setSubAmount(value, index)"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref, toValue, watch } from 'vue'
+import { ref, toValue, watch } from 'vue'
 import InputComp from '../shared/InputComp.vue'
 import MyColorPicker from '../shared/MyColorPicker.vue'
 import PlusIcon from '../icons/PlusIcon.vue'
 
 const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  },
   amount: {
     type: Number,
     required: false,
@@ -101,10 +107,6 @@ watch(text, () => {
   emit('textUpdated', text.value)
 })
 
-const pieceOfWallet = computed(() => {
-  return (amount.value / (props.total + 0.0000000000001)) * 100.0
-})
-
 const setAmount = (e) => {
   amount.value = parseFloat(e)
   emit('amountUpdated', e)
@@ -121,7 +123,7 @@ const setText = (e) => {
 }
 
 const addSubAmount = () => {
-  subAmounts.value.push({ text: '', value: 0.0 })
+  subAmounts.value.push({ id: crypto.randomUUID(), text: '', value: 0.0 })
 }
 
 const setSubAmount = (value, index) => {
@@ -132,6 +134,7 @@ const setSubAmount = (value, index) => {
 
 const setSubAmountText = (text, index) => {
   subAmounts.value[index].text = text
+  emit('subAmountsUpdated', subAmounts.value)
 }
 
 const updateAmount = () => {

@@ -6,6 +6,7 @@
 
 <script setup>
 import { ref, toValue, watch } from 'vue'
+
 const currentColor = ref(toValue(props.pureColor))
 
 const setCurrentColor = (rbgStr) => {
@@ -22,15 +23,9 @@ const setCurrentColor = (rbgStr) => {
 
 const props = defineProps({
   pureColor: {
-    type: Object,
+    type: String,
     required: false,
-    default: () => {
-      return {
-        r: 0,
-        g: 0,
-        b: 0
-      }
-    }
+    default: 'rgb(0, 0, 0)'
   }
 })
 

@@ -11,32 +11,34 @@
 
       <div class="mt-10">
         <Wallet
-          wallet-name="Inwestycje długoterminowe"
-          :initial-data="longTermFund"
-          @asset-caption-changed="(e) => changeAssetCaption(longTermFund, e)"
-          @asset-amount-changed="(e) => changeAssetAmount(longTermFund, e)"
-          @asset-color-changed="(e) => changeAssetColor(longTermFund, e)"
-          @asset-text-updated="(assetId, text) => changeAssetText(longTermFund, assetId, text)"
+          :wallet-name="longTermFund.id"
+          :initial-data="longTermFund.data"
+          @asset-caption-changed="(e) => changeAssetCaption(longTermFund.data, e)"
+          @asset-amount-changed="(e) => changeAssetAmount(longTermFund.data, e)"
+          @asset-color-changed="(e) => changeAssetColor(longTermFund.data, e)"
+          @asset-text-updated="(assetId, text) => changeAssetText(longTermFund.data, assetId, text)"
         />
       </div>
 
       <div class="mt-10">
         <Wallet
-          wallet-name="Poduszka finansowa"
-          :initial-data="emergencyFund"
-          @asset-caption-changed="(e) => changeAssetCaption(emergencyFund, e)"
-          @asset-amount-changed="(e) => changeAssetAmount(emergencyFund, e)"
-          @asset-color-changed="(e) => changeAssetColor(emergencyFund, e)"
+          :wallet-name="emergencyFund.id"
+          :initial-data="emergencyFund.data"
+          @asset-text-updated="
+            (assetId, text) => changeAssetText(emergencyFund.data, assetId, text)
+          "
+          @asset-amount-changed="(e) => changeAssetAmount(emergencyFund.data, e)"
+          @asset-color-changed="(e) => changeAssetColor(emergencyFund.data, e)"
         />
       </div>
 
       <div class="mt-10">
         <Wallet
-          wallet-name="PPK"
-          :initial-data="ppkFund"
-          @asset-caption-changed="(e) => changeAssetCaption(ppkFund, e)"
-          @asset-amount-changed="(e) => changeAssetAmount(ppkFund, e)"
-          @asset-color-changed="(e) => changeAssetColor(ppkFund, e)"
+          :wallet-name="ppkFund.id"
+          :initial-data="ppkFund.data"
+          @asset-text-updated="(assetId, text) => changeAssetText(ppkFund.data, assetId, text)"
+          @asset-amount-changed="(e) => changeAssetAmount(ppkFund.data, e)"
+          @asset-color-changed="(e) => changeAssetColor(ppkFund.data, e)"
         />
       </div>
 
@@ -63,39 +65,20 @@ import { useWalletsStore } from '../stores/walletsStore'
 
 const walletsStore = useWalletsStore()
 
-const longTermFund = ref(walletsStore.getWallet('Inwestycje długoterminowe').data)
+const longTermFund = ref(walletsStore.getWallet('Inwestycje długoterminowe'))
+const emergencyFund = ref(walletsStore.getWallet('Poduszka finansowa'))
+const ppkFund = ref(walletsStore.getWallet('PPK'))
+const outcomsMay_2023 = ref(walletsStore.getWallet('Wydatki maj 2023'))
 
-const emergencyFund = ref(walletsStore.getWallet('Poduszka finansowa').data)
-
-const ppkFund = ref(walletsStore.getWallet('PPK').data)
-
-const outcomsMay_2023 = ref([
-  {
-    id: '82d89791-1235-11ee-be56-0242ac1211666',
-    text: 'mieszkanie',
-    color: '#00cdef',
-    subAmounts: [
-      {
-        text: 'internet',
-        value: 69.99
-      }
-    ]
-  }
+const fundsData = ref([
+  ...longTermFund.value.data,
+  ...emergencyFund.value.data,
+  ...ppkFund.value.data
 ])
-
-const fundsData = ref([...longTermFund.value, ...emergencyFund.value, ...ppkFund.value])
 
 const total = computed(() => fundsData.value.map((fund) => fund.amount).reduce((x, y) => x + y, 0))
 
-const changeAssetCaption = (funds, event) => {
-  const fund = funds.find((fund) => fund.id === event.assetId)
-  if (fund) {
-    fund.caption = event.caption
-  }
-}
-
 const changeAssetAmount = (funds, event) => {
-  console.log(event)
   const fund = funds.find((fund) => fund.id === event.assetId)
   if (fund) {
     fund.amount = parseFloat(event.amount)
@@ -110,7 +93,6 @@ const changeAssetColor = (funds, event) => {
 }
 
 const changeAssetText = (funds, assetId, text) => {
-  console.log(`assetId: ${assetId} text: ${text}`)
   const fund = funds.find((fund) => fund.id === assetId)
   if (fund) {
     fund.text = text

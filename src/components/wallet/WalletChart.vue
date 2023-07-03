@@ -1,5 +1,5 @@
 <template>
-  <Doughnut ref="chart" :data="props.chartData" :options="options" :plugins="myPlugin" />
+  <Doughnut ref="chart" :data="props.chartData" :plugins="myPlugin" />
 </template>
 
 <script setup>
@@ -20,7 +20,6 @@ const myPlugin = [
         0.0
       )
       const percent = ((100 * elementValue) / total).toFixed(2) + ' %'
-      ctx.fillStyle = 'green'
       ctx.textAlign = 'center'
       ctx.font = '36px "Helvetica Neue", Helvetica, Arial, sans-serif'
       ctx.fillText(percent, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y)
