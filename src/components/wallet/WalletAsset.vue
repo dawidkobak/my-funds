@@ -5,14 +5,46 @@
     </div>
 
     <div class="w-2/12">
-      <InputComp type="number" width-full :value="number" @updated-input="setNumber" />
+      <InputComp
+        type="number"
+        width-full
+        :value="amount"
+        :disabled="props.withSubAmounts"
+        @updated-input="setAmount"
+      />
     </div>
 
     <div class="w-2/12 ml-3">
       <MyColorPicker :pure-color="currentColor" @colorUpdated="setColor" />
     </div>
 
-    <div class="w-3/12 text-right">{{ pieceOfWallet.toFixed(2) }} %</div>
+    <div class="w-3/12 grid grid-cols-2">
+      <div v-if="props.withSubAmounts">
+        <PlusIcon class="w-6 h-6 cursor-pointer" @click="addSubAmount" />
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full" v-for="(subAmount, index) in subAmounts" :key="index">
+    <div class="w-4/12">
+      <div class="ml-6">
+        <InputComp
+          type="text"
+          width-full
+          :value="subAmount.text"
+          @updated-input="text = setSubAmountText(text, index)"
+        />
+      </div>
+    </div>
+    <div class="w-2/12">
+      <div class="mx-2">
+        <InputComp
+          type="number"
+          width-full
+          :value="subAmount.value"
+          @updated-input="(value) => setSubAmount(value, index)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,9 +52,10 @@
 import { computed, ref, toValue, watch } from 'vue'
 import InputComp from '../shared/InputComp.vue'
 import MyColorPicker from '../shared/MyColorPicker.vue'
+import PlusIcon from '../icons/PlusIcon.vue'
 
 const props = defineProps({
-  number: {
+  amount: {
     type: Number,
     required: false,
     default: 0.0
@@ -41,10 +74,21 @@ const props = defineProps({
     type: Number,
     required: false,
     default: 0.0
+  },
+  withSubAmounts: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
+  subAmounts: {
+    type: Array,
+    required: false,
+    default: new Array()
   }
 })
 
-const number = ref(toValue(props.number))
+const amount = ref(toValue(props.amount))
+const subAmounts = ref(toValue(props.subAmounts))
 const color = ref(toValue(props.color))
 const currentColor = ref(toValue(color.value))
 const text = ref(toValue(props.text))
@@ -58,12 +102,12 @@ watch(text, () => {
 })
 
 const pieceOfWallet = computed(() => {
-  return (number.value / (props.total + 0.0000000000001)) * 100.0
+  return (amount.value / (props.total + 0.0000000000001)) * 100.0
 })
 
-const setNumber = (e) => {
-  number.value = parseFloat(e)
-  emit('numberUpdated', e)
+const setAmount = (e) => {
+  amount.value = parseFloat(e)
+  emit('amountUpdated', e)
 }
 
 const setColor = (e) => {
@@ -76,5 +120,34 @@ const setText = (e) => {
   emit('textUpdated', e)
 }
 
-const emit = defineEmits(['captionUpdated', 'numberUpdated', 'colorUpdated', 'textUpdated'])
+const addSubAmount = () => {
+  subAmounts.value.push({ text: '', value: 0.0 })
+}
+
+const setSubAmount = (value, index) => {
+  subAmounts.value[index].value = parseFloat(value)
+  emit('subAmountsUpdated', subAmounts.value)
+  updateAmount()
+}
+
+const setSubAmountText = (text, index) => {
+  subAmounts.value[index].text = text
+}
+
+const updateAmount = () => {
+  let sum = 0.0
+  subAmounts.value.forEach((subAmount) => {
+    sum = sum + subAmount.value
+  })
+  amount.value = sum
+  emit('amountUpdated', sum)
+}
+
+const emit = defineEmits([
+  'captionUpdated',
+  'amountUpdated',
+  'colorUpdated',
+  'textUpdated',
+  'subAmountsUpdated'
+])
 </script>

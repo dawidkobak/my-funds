@@ -6,27 +6,47 @@
       </div>
 
       <div class="my-5">
-        <WalletSummary :funds-data="fundsData" :total="total" />
+        <AssetsSummary :funds-data="fundsData" :total="total" />
       </div>
 
-      <WalletInstance
-        wallet-name="Inwestycje długoterminowe"
-        :initial-data="longTermFund"
-        @asset-caption-changed="(e) => changeAssetCaption(longTermFund, e)"
-        @asset-number-changed="(e) => changeAssetNumber(longTermFund, e)"
-        @asset-color-changed="(e) => changeAssetColor(longTermFund, e)"
-        @asset-text-updated="(assetId, text) => changeAssetText(longTermFund, assetId, text)"
-      />
+      <div class="mt-10">
+        <Wallet
+          wallet-name="Inwestycje długoterminowe"
+          :initial-data="longTermFund"
+          @asset-caption-changed="(e) => changeAssetCaption(longTermFund, e)"
+          @asset-amount-changed="(e) => changeAssetAmount(longTermFund, e)"
+          @asset-color-changed="(e) => changeAssetColor(longTermFund, e)"
+          @asset-text-updated="(assetId, text) => changeAssetText(longTermFund, assetId, text)"
+        />
+      </div>
 
-      <StockChart />
+      <div class="mt-10">
+        <Wallet
+          wallet-name="Poduszka finansowa"
+          :initial-data="emergencyFund"
+          @asset-caption-changed="(e) => changeAssetCaption(emergencyFund, e)"
+          @asset-amount-changed="(e) => changeAssetAmount(emergencyFund, e)"
+          @asset-color-changed="(e) => changeAssetColor(emergencyFund, e)"
+        />
+      </div>
 
-      <WalletInstance
-        wallet-name="Poduszka finansowa"
-        :initial-data="emergencyFund"
-        @asset-caption-changed="(e) => changeAssetCaption(emergencyFund, e)"
-        @asset-number-changed="(e) => changeAssetNumber(emergencyFund, e)"
-        @asset-color-changed="(e) => changeAssetColor(emergencyFund, e)"
-      />
+      <div class="mt-10">
+        <Wallet
+          wallet-name="PPK"
+          :initial-data="ppkFund"
+          @asset-caption-changed="(e) => changeAssetCaption(ppkFund, e)"
+          @asset-amount-changed="(e) => changeAssetAmount(ppkFund, e)"
+          @asset-color-changed="(e) => changeAssetColor(ppkFund, e)"
+        />
+      </div>
+
+      <div class="mt-10">
+        <WalletMonthlyOutcomSummary :initial-data="outcomsMay_2023" />
+      </div>
+
+      <div class="mt-10">
+        <StockChart />
+      </div>
     </div>
   </main>
 </template>
@@ -35,67 +55,37 @@
 import { computed, ref } from 'vue'
 
 import MyFundsLogo from '../components/branding/MyFundsLogo.vue'
-import WalletInstance from '../components/wallet/WalletInstance.vue'
-import WalletSummary from '../components/wallet/WalletSummary.vue'
+import Wallet from '../components/wallet/Wallet.vue'
+import AssetsSummary from '../components/functionalities/AssetsSummary.vue'
 import StockChart from '../components/charts/StockChart.vue'
+import WalletMonthlyOutcomSummary from '../components/wallet/WalletMonthlyOutcomSummary.vue'
+import { useWalletsStore } from '../stores/walletsStore'
 
-const longTermFund = ref([
+const walletsStore = useWalletsStore()
+
+const longTermFund = ref(walletsStore.getWallet('Inwestycje długoterminowe').data)
+
+const emergencyFund = ref(walletsStore.getWallet('Poduszka finansowa').data)
+
+const ppkFund = ref(walletsStore.getWallet('PPK').data)
+
+const outcomsMay_2023 = ref([
   {
-    id: '82d88c4a-1235-11ee-be56-0242ac120002',
-    text: 'EMIM',
-    number: 6456.9,
-    color: '#1cfc76'
-  },
-  {
-    id: '82d88ede-1235-11ee-be56-0242ac120002',
-    text: 'SGLN',
-    number: 4343.76,
-    color: '#fcf11c'
-  },
-  {
-    id: '82d89028-1235-11ee-be56-0242ac120002',
-    text: 'XFVT',
-    number: 9157.19,
-    color: '#d41c1c'
-  },
-  {
-    id: '82d8914a-1235-11ee-be56-0242ac120002',
-    text: 'SWIG 80',
-    number: 4234.0,
-    color: '#e4090a'
-  },
-  {
-    id: '82d8951e-1235-11ee-be56-0242ac120002',
-    text: 'Bitcoin',
-    number: 15298.68,
-    color: '#f89414'
-  },
-  {
-    id: '82d8965e-1235-11ee-be56-0242ac120002',
-    text: 'Intel',
-    number: 4113.33,
-    color: '#187cc4'
+    id: '82d89791-1235-11ee-be56-0242ac1211666',
+    text: 'mieszkanie',
+    color: '#00cdef',
+    subAmounts: [
+      {
+        text: 'internet',
+        value: 69.99
+      }
+    ]
   }
 ])
 
-const emergencyFund = ref([
-  {
-    id: '82d89780-1235-11ee-be56-0242ac120002',
-    text: 'Obligacje',
-    number: 17381.78,
-    color: '#202474'
-  },
-  {
-    id: '82d89a80-1235-11ee-b446-0242ac120002',
-    text: 'Gotówka',
-    number: 8381.78,
-    color: '#ff24f0'
-  }
-])
+const fundsData = ref([...longTermFund.value, ...emergencyFund.value, ...ppkFund.value])
 
-const fundsData = ref([...longTermFund.value, ...emergencyFund.value])
-
-const total = computed(() => fundsData.value.map((fund) => fund.number).reduce((x, y) => x + y, 0))
+const total = computed(() => fundsData.value.map((fund) => fund.amount).reduce((x, y) => x + y, 0))
 
 const changeAssetCaption = (funds, event) => {
   const fund = funds.find((fund) => fund.id === event.assetId)
@@ -104,11 +94,11 @@ const changeAssetCaption = (funds, event) => {
   }
 }
 
-const changeAssetNumber = (funds, event) => {
+const changeAssetAmount = (funds, event) => {
   console.log(event)
   const fund = funds.find((fund) => fund.id === event.assetId)
   if (fund) {
-    fund.number = parseFloat(event.number)
+    fund.amount = parseFloat(event.amount)
   }
 }
 

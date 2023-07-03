@@ -5,7 +5,7 @@
 <script setup>
 import { ref } from 'vue'
 import {
-  Chart as ChartJS,
+  Chart,
   ArcElement,
   Tooltip,
   Legend,
@@ -15,8 +15,9 @@ import {
   LineElement
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
+import { DynamoDBClient, QueryCommand } from '@aws-sdk/client-dynamodb'
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement)
+Chart.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement)
 
 const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
 const charOptions = ref({
@@ -34,4 +35,17 @@ const chartData = ref({
     }
   ]
 })
+
+const client = new DynamoDBClient({ region: 'eu-central-1' })
+
+const input = {
+  ExpressionAttributeValues: {
+    ':v1': {
+      S: 'No One You Know'
+    }
+  },
+  KeyConditionExpression: 'Artist = :v1',
+  ProjectionExpression: 'SongTitle',
+  TableName: 'stock-quotes'
+}
 </script>
