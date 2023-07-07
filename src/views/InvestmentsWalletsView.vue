@@ -1,46 +1,25 @@
 <template>
-  <main class="flex w-3/4 items-center">
-    <div class="w-full mx-auto">
-      <div class="mt-5"></div>
-
-      <div class="my-5">
-        <AssetsSummary :funds-data="fundsData" :total="total" />
-      </div>
-
-      <div class="mt-10">
-        <Wallet
-          :wallet-name="longTermFund.id"
-          :initial-data="longTermFund.data"
-          @asset-caption-changed="(e) => changeAssetCaption(longTermFund.data, e)"
-          @asset-amount-changed="(e) => changeAssetAmount(longTermFund.data, e)"
-          @asset-color-changed="(e) => changeAssetColor(longTermFund.data, e)"
-          @asset-text-updated="(assetId, text) => changeAssetText(longTermFund.data, assetId, text)"
-        />
-      </div>
-
-      <div class="mt-10">
-        <Wallet
-          :wallet-name="emergencyFund.id"
-          :initial-data="emergencyFund.data"
-          @asset-text-updated="
-            (assetId, text) => changeAssetText(emergencyFund.data, assetId, text)
-          "
-          @asset-amount-changed="(e) => changeAssetAmount(emergencyFund.data, e)"
-          @asset-color-changed="(e) => changeAssetColor(emergencyFund.data, e)"
-        />
-      </div>
-
-      <div class="mt-10">
-        <Wallet
-          :wallet-name="ppkFund.id"
-          :initial-data="ppkFund.data"
-          @asset-text-updated="(assetId, text) => changeAssetText(ppkFund.data, assetId, text)"
-          @asset-amount-changed="(e) => changeAssetAmount(ppkFund.data, e)"
-          @asset-color-changed="(e) => changeAssetColor(ppkFund.data, e)"
-        />
-      </div>
+  <WalletsContainer
+    label="Inwestycje"
+    type="Investing"
+    v-model="currentWallet"
+    newWalletCaption="Stwórz nowy portfel"
+  >
+    <div class="my-5">
+      <AssetsSummary :funds-data="fundsData" :total="total" />
     </div>
-  </main>
+
+    <div class="mt-10">
+      <Wallet
+        :wallet-name="currentWallet.id"
+        :initial-data="currentWallet.data"
+        @asset-caption-changed="(e) => changeAssetCaption(currentWallet.data, e)"
+        @asset-amount-changed="(e) => changeAssetAmount(currentWallet.data, e)"
+        @asset-color-changed="(e) => changeAssetColor(currentWallet.data, e)"
+        @asset-text-updated="(assetId, text) => changeAssetText(currentWallet.data, assetId, text)"
+      />
+    </div>
+  </WalletsContainer>
 </template>
 
 <script setup>
@@ -48,19 +27,17 @@ import { computed, ref } from 'vue'
 
 import Wallet from '../components/wallet/Wallet.vue'
 import AssetsSummary from '../components/functionalities/AssetsSummary.vue'
+import WalletsContainer from './WalletsContainer.vue'
 import { useWalletsStore } from '../stores/walletsStore'
 
 const walletsStore = useWalletsStore()
+const investsmentsWallets = ref(walletsStore.getInvestsmentsWallets)
 
-const longTermFund = ref(walletsStore.getWallet('Inwestycje długoterminowe'))
-const emergencyFund = ref(walletsStore.getWallet('Poduszka finansowa'))
-const ppkFund = ref(walletsStore.getWallet('PPK'))
+const currentWallet = ref(
+  investsmentsWallets.value[0] ?? { id: 'Portfel demo', type: 'Investing', data: [] }
+)
 
-const fundsData = ref([
-  ...longTermFund.value.data,
-  ...emergencyFund.value.data,
-  ...ppkFund.value.data
-])
+const fundsData = ref(investsmentsWallets.value.flatMap((wallet) => wallet.data))
 
 const total = computed(() => fundsData.value.map((fund) => fund.amount).reduce((x, y) => x + y, 0))
 

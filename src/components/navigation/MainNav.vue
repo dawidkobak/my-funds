@@ -14,15 +14,15 @@
       <div class="menu">
         <router-link to="/" class="button">
           <span class="material-symbols-outlined"> trending_up </span>
-          <span class="text">Inwestycje</span>
+          <span class="text ml-5">Inwestycje</span>
         </router-link>
         <router-link to="/expenses" class="button">
           <span class="material-symbols-outlined"> receipt_long </span>
-          <span class="text">Wydatki</span>
+          <span class="text ml-5">Wydatki</span>
         </router-link>
         <router-link to="/charts" class="button">
           <span class="material-symbols-outlined"> query_stats </span>
-          <span class="text">Notowania</span>
+          <span class="text ml-5">Notowania</span>
         </router-link>
       </div>
 
@@ -31,7 +31,7 @@
       <div class="menu">
         <router-link to="/settings" class="button">
           <span class="material-symbols-outlined">settings</span>
-          <span class="text">Settings</span>
+          <span class="text ml-5">Settings</span>
         </router-link>
       </div>
     </aside>

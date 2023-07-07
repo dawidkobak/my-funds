@@ -12,14 +12,34 @@ export const useWalletsStore = defineStore('wallets', () => {
     return wallets.value.find((w) => w.id === id)
   }
 
+  function getWalletsByType(type) {
+    return wallets.value.filter((wallet) => wallet.type == type)
+  }
+
   const getExpensesWallets = computed(() => {
     return wallets.value.filter((wallet) => wallet.type == 'Expenses')
   })
+
+  const getInvestsmentsWallets = computed(() => {
+    return wallets.value.filter((wallet) => wallet.type == 'Investing')
+  })
+
+  function createWallet(id, type) {
+    wallets.value.push({
+      id,
+      type,
+      data: []
+    })
+    setLocalStorage()
+  }
 
   return {
     wallets,
     setLocalStorage,
     getWallet,
-    getExpensesWallets
+    getExpensesWallets,
+    getInvestsmentsWallets,
+    getWalletsByType,
+    createWallet
   }
 })

@@ -1,35 +1,27 @@
 <template>
-  <main class="flex w-3/4 items-center">
-    <div class="w-full mx-auto">
-      <div class="mt-5">
-        <v-combobox
-          label="Wytatek"
-          :items="expensesWallets"
-          v-model="currentWalletName"
-        ></v-combobox>
-      </div>
-      <div></div>
-      <div class="mt-10">
-        <WalletMonthlyOutcomSummary :initial-data="currentWallet" />
-      </div>
+  <WalletsContainer
+    label="Wydatek"
+    type="Expenses"
+    v-model="currentWallet"
+    newWalletCaption="Stwórz nową listę wydatków"
+  >
+    <div class="mt-10">
+      <WalletMonthlyOutcomSummary :initial-data="currentWallet" />
     </div>
-  </main>
+  </WalletsContainer>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
+import WalletsContainer from './WalletsContainer.vue'
 import WalletMonthlyOutcomSummary from '../components/wallet/WalletMonthlyOutcomSummary.vue'
 import { useWalletsStore } from '../stores/walletsStore'
-import { watch } from 'vue'
+
 const walletsStore = useWalletsStore()
+const expensessWallets = ref(walletsStore.getExpensesWallets)
 
-const currentWalletName = ref('2023 Maj')
-const expensesWallets = ref(walletsStore.getExpensesWallets.map((wallet) => wallet.id))
-
-watch(currentWalletName, () => {
-  currentWallet.value = walletsStore.getWallet(currentWalletName.value)
-})
-
-const currentWallet = ref(walletsStore.getWallet(currentWalletName.value))
+const currentWallet = ref(
+  expensessWallets.value[0] ?? { id: 'Wydatki demo', type: 'Expenses', data: [] }
+)
 </script>

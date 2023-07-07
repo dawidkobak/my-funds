@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 text-6xl">
-      <div class="">Twój majątek wynosi:</div>
-      <div class="text-right">{{ props.total.toFixed(2) }} zł</div>
+    <div class="w-full flex text-6xl">
+      <div class="w-3/4">Suma wszystkich inwestycji wynosi:</div>
+      <div class="w-1/4 text-right">{{ props.total.toFixed(2) }} zł</div>
     </div>
   </div>
 </template>
