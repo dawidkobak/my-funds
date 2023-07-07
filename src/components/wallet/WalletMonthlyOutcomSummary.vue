@@ -2,6 +2,7 @@
   <Wallet
     :wallet-name="props.initialData.id"
     with-sub-amounts
+    type="Expenses"
     :initial-data="props.initialData.data"
     @asset-caption-changed="(e) => changeAssetCaption(currentOutcoms, e)"
     @asset-color-changed="(e) => changeAssetColor(currentOutcoms, e)"
@@ -13,6 +14,7 @@
 import { ref, toValue } from 'vue'
 import Wallet from './Wallet.vue'
 import { useWalletsStore } from '../../stores/walletsStore'
+import { watch } from 'vue'
 
 const walletsStore = useWalletsStore()
 
@@ -21,6 +23,13 @@ const props = defineProps({
     type: Object,
     required: false,
     defulat: new Object()
+  }
+})
+
+watch(props.initialData, () => {
+  currentOutcoms.value = {
+    id: props.walletName,
+    data: toValue(props.initialData)
   }
 })
 

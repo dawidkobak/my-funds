@@ -99,13 +99,21 @@ const color = ref(toValue(props.color))
 const currentColor = ref(toValue(color.value))
 const text = ref(toValue(props.text))
 
-watch(currentColor, () => {
-  emit('colorUpdated', currentColor.value)
+watch(props, () => {
+  amount.value = parseFloat(props.amount.toFixed(2))
+  subAmounts.value = props.subAmounts
+  color.value = props.color
+  currentColor.value = color.value
+  text.value = props.text
 })
 
-watch(text, () => {
-  emit('textUpdated', text.value)
-})
+// watch(currentColor, () => {
+//   emit('colorUpdated', currentColor.value)
+// })
+
+// watch(text, () => {
+//   emit('textUpdated', text.value)
+// })
 
 const setAmount = (e) => {
   amount.value = parseFloat(e)

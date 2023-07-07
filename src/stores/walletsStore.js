@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useWalletsStore = defineStore('wallets', () => {
@@ -12,9 +12,14 @@ export const useWalletsStore = defineStore('wallets', () => {
     return wallets.value.find((w) => w.id === id)
   }
 
+  const getExpensesWallets = computed(() => {
+    return wallets.value.filter((wallet) => wallet.type == 'Expenses')
+  })
+
   return {
     wallets,
     setLocalStorage,
-    getWallet
+    getWallet,
+    getExpensesWallets
   }
 })

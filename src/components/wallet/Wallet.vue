@@ -3,6 +3,12 @@
     <div class="grid grid-cols-2">
       <div class="w-full my-auto">
         <div class="">
+          <div class="mt-10">
+            <div class="grid grid-cols-2 text-3xl">
+              <div class="text-left">Suma {{ walletTypeCaption }} wynosi:</div>
+              <div class="text-right mr-5">{{ total.toFixed(2) }}</div>
+            </div>
+          </div>
           <div class="my-4">
             <div class="grid grid-cols-1">
               <div class="w-full">
@@ -31,13 +37,6 @@
           <div class="mt-4 ml-1 hover:cursor-pointer max-w-min" @click="addAsset">
             <PlusIcon class="stroke-my-funds w-8 h-8" />
           </div>
-
-          <div class="mt-10">
-            <div class="grid grid-cols-2 text-3xl">
-              <div class="text-left">Suma portfela wynosi:</div>
-              <div class="text-right mr-5">{{ total.toFixed(2) }}</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -49,7 +48,7 @@
 </template>
 
 <script setup>
-import { computed, ref, toValue } from 'vue'
+import { computed, ref, toValue, watch } from 'vue'
 import WalletChart from './WalletChart.vue'
 import WalletAsset from '../wallet/WalletAsset.vue'
 import PlusIcon from '../icons/PlusIcon.vue'
@@ -62,6 +61,17 @@ const currentAssets = ref(toValue(props.initialData))
 const total = computed(() =>
   currentAssets.value.map((asset) => parseFloat(asset.amount)).reduce((x, y) => x + y, 0.0)
 )
+
+const walletTypeCaption = computed(() => {
+  if (props.type === 'Expenses') {
+    return 'wydatków'
+  }
+  return 'portfela'
+})
+
+watch(props, () => {
+  currentAssets.value = toValue(props.initialData)
+})
 
 const props = defineProps({
   walletName: {
@@ -78,6 +88,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  type: {
+    type: String,
+    required: false,
+    default: 'Investing'
   }
 })
 
