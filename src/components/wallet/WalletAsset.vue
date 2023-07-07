@@ -93,7 +93,7 @@ const props = defineProps({
   }
 })
 
-const amount = ref(toValue(props.amount))
+const amount = ref(toValue(parseFloat(props.amount.toFixed(2))))
 const subAmounts = ref(toValue(props.subAmounts))
 const color = ref(toValue(props.color))
 const currentColor = ref(toValue(color.value))
@@ -142,7 +142,7 @@ const updateAmount = () => {
   subAmounts.value.forEach((subAmount) => {
     sum = sum + subAmount.value
   })
-  amount.value = sum
+  amount.value = parseFloat(sum.toFixed(2))
   emit('amountUpdated', sum)
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:w-150 lg:w-lg min-h-min">
+  <div class="w-full min-h-min">
     <div class="grid grid-cols-2">
       <div class="w-full my-auto">
         <div class="">

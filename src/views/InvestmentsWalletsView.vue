@@ -1,9 +1,7 @@
 <template>
-  <main class="flex w-full items-center">
-    <div class="sm:w-full xl:w-lg mx-auto">
-      <div class="mt-5">
-        <MyFundsLogo />
-      </div>
+  <main class="flex w-3/4 items-center">
+    <div class="w-full mx-auto">
+      <div class="mt-5"></div>
 
       <div class="my-5">
         <AssetsSummary :funds-data="fundsData" :total="total" />
@@ -41,14 +39,6 @@
           @asset-color-changed="(e) => changeAssetColor(ppkFund.data, e)"
         />
       </div>
-
-      <div class="mt-10">
-        <WalletMonthlyOutcomSummary :initial-data="outcomsMay_2023" />
-      </div>
-
-      <div class="mt-10">
-        <StockChart />
-      </div>
     </div>
   </main>
 </template>
@@ -56,11 +46,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 
-import MyFundsLogo from '../components/branding/MyFundsLogo.vue'
 import Wallet from '../components/wallet/Wallet.vue'
 import AssetsSummary from '../components/functionalities/AssetsSummary.vue'
-import StockChart from '../components/charts/StockChart.vue'
-import WalletMonthlyOutcomSummary from '../components/wallet/WalletMonthlyOutcomSummary.vue'
 import { useWalletsStore } from '../stores/walletsStore'
 
 const walletsStore = useWalletsStore()
@@ -68,7 +55,6 @@ const walletsStore = useWalletsStore()
 const longTermFund = ref(walletsStore.getWallet('Inwestycje długoterminowe'))
 const emergencyFund = ref(walletsStore.getWallet('Poduszka finansowa'))
 const ppkFund = ref(walletsStore.getWallet('PPK'))
-const outcomsMay_2023 = ref(walletsStore.getWallet('Wydatki maj 2023'))
 
 const fundsData = ref([
   ...longTermFund.value.data,
