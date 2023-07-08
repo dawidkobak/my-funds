@@ -2,7 +2,9 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent width="1024">
       <template v-slot:activator="{ props }">
-        <v-btn color="primary" v-bind="props"> Stwórz {{ createWalletCaption }} </v-btn>
+        <v-btn color="#342b84" class="text-white" v-bind="props">
+          Stwórz {{ createWalletCaption }}
+        </v-btn>
       </template>
       <v-card>
         <v-card-title>

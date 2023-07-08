@@ -1,7 +1,7 @@
 <template>
   <div class="w-full min-h-min">
     <div class="grid grid-cols-2">
-      <div class="w-full my-auto">
+      <div class="w-full">
         <div class="">
           <div class="mt-10">
             <div class="grid grid-cols-2 text-3xl">
@@ -35,7 +35,9 @@
           </div>
 
           <div class="mt-4 ml-1 hover:cursor-pointer max-w-min" @click="addAsset">
-            <PlusIcon class="stroke-my-funds w-8 h-8" />
+            <v-btn color="#342b84" class="text-white" v-bind="props">
+              {{ addAnotherAssetCaption }}
+            </v-btn>
           </div>
         </div>
       </div>
@@ -51,7 +53,6 @@
 import { computed, ref, toValue, watch } from 'vue'
 import WalletChart from './WalletChart.vue'
 import WalletAsset from '../wallet/WalletAsset.vue'
-import PlusIcon from '../icons/PlusIcon.vue'
 import { useWalletsStore } from '../../stores/walletsStore'
 
 const walletStore = useWalletsStore()
@@ -93,6 +94,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'Investing'
+  },
+  addAnotherAssetCaption: {
+    type: String,
+    required: false,
+    default: 'Add another wallet asset'
   }
 })
 

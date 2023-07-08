@@ -4,6 +4,7 @@
     with-sub-amounts
     type="Expenses"
     :initial-data="props.initialData.data"
+    addAnotherAssetCaption="Dodaj kolejny wydatek"
     @asset-caption-changed="(e) => changeAssetCaption(currentOutcoms, e)"
     @asset-color-changed="(e) => changeAssetColor(currentOutcoms, e)"
     @assetSubAmountsUpdated="changeAssetSubAmounts"

@@ -13,6 +13,7 @@
       <Wallet
         :wallet-name="currentWallet.id"
         :initial-data="currentWallet.data"
+        addAnotherAssetCaption="Dodaj kolejne aktywo"
         @asset-caption-changed="(e) => changeAssetCaption(currentWallet.data, e)"
         @asset-amount-changed="(e) => changeAssetAmount(currentWallet.data, e)"
         @asset-color-changed="(e) => changeAssetColor(currentWallet.data, e)"
@@ -27,14 +28,25 @@ import { computed, ref } from 'vue'
 
 import Wallet from '../components/wallet/Wallet.vue'
 import AssetsSummary from '../components/functionalities/AssetsSummary.vue'
-import WalletsContainer from './WalletsContainer.vue'
+import WalletsContainer from '../components/wallet/WalletsContainer.vue'
 import { useWalletsStore } from '../stores/walletsStore'
 
 const walletsStore = useWalletsStore()
 const investsmentsWallets = ref(walletsStore.getInvestsmentsWallets)
 
 const currentWallet = ref(
-  investsmentsWallets.value[0] ?? { id: 'Portfel demo', type: 'Investing', data: [] }
+  investsmentsWallets.value[0] ?? {
+    id: 'Portfel demo',
+    type: 'Investing',
+    data: [
+      {
+        id: '82d88c4a-1235-11ef-be56-0242ac100001',
+        text: 'Gotówka',
+        amount: 1000.0,
+        color: 'rgb(73, 190, 37)'
+      }
+    ]
+  }
 )
 
 const fundsData = ref(investsmentsWallets.value.flatMap((wallet) => wallet.data))

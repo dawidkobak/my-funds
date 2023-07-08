@@ -20,9 +20,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useWalletsStore } from '../stores/walletsStore'
+import { useWalletsStore } from '../../stores/walletsStore'
 import { watch } from 'vue'
-import WalletCreator from '../components/wallet/WalletCreator.vue'
+import WalletCreator from './WalletCreator.vue'
 
 const props = defineProps({
   label: {
