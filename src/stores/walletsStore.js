@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useWalletsStore = defineStore('wallets', () => {
   const wallets = ref(JSON.parse(localStorage.getItem('wallets')) ?? [])
+  const walletLastOpened = ref(JSON.parse(localStorage.getItem('walletLastOpened')) ?? {})
 
   function setLocalStorage() {
     localStorage.setItem('wallets', JSON.stringify(wallets.value))
@@ -33,6 +34,15 @@ export const useWalletsStore = defineStore('wallets', () => {
     setLocalStorage()
   }
 
+  function getLastOpened(type) {
+    return walletLastOpened.value[type]
+  }
+
+  function setLastOpened(type, walletName) {
+    walletLastOpened.value[type] = walletName
+    localStorage.setItem('walletLastOpened', JSON.stringify(walletLastOpened.value))
+  }
+
   return {
     wallets,
     setLocalStorage,
@@ -40,6 +50,8 @@ export const useWalletsStore = defineStore('wallets', () => {
     getExpensesWallets,
     getInvestsmentsWallets,
     getWalletsByType,
-    createWallet
+    createWallet,
+    getLastOpened,
+    setLastOpened
   }
 })

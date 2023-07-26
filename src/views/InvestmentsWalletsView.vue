@@ -33,9 +33,10 @@ import { useWalletsStore } from '../stores/walletsStore'
 
 const walletsStore = useWalletsStore()
 const investsmentsWallets = ref(walletsStore.getInvestsmentsWallets)
+const lastOpened = ref(walletsStore.getLastOpened('Investing'))
 
 const currentWallet = ref(
-  investsmentsWallets.value[0] ?? {
+  investsmentsWallets.value.find((el) => el.id === lastOpened.value) ?? {
     id: 'Portfel demo',
     type: 'Investing',
     data: [

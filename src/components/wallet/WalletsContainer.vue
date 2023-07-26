@@ -1,5 +1,5 @@
 <template>
-  <main class="flex w-3/4 items-center">
+  <main class="w-3/4 items-center">
     <div class="w-full mx-auto">
       <div class="mt-5">
         <v-combobox
@@ -51,16 +51,17 @@ const walletsStore = useWalletsStore()
 
 const wallets = ref(walletsStore.getWalletsByType(props.type))
 const walletIds = ref(wallets.value.map((wallet) => wallet.id))
-const currentWalletName = ref()
+const currentWalletName = ref(walletsStore.getLastOpened(props.type))
 
 const emit = defineEmits(['update:modelValue'])
 
 watch(currentWalletName, () => {
   currentWallet.value = walletsStore.getWallet(currentWalletName.value)
   emit('update:modelValue', currentWallet.value)
+  walletsStore.setLastOpened(props.type, currentWalletName.value)
 })
 
-const currentWallet = ref(walletsStore.getWallet(currentWalletName.value))
+const currentWallet = ref(walletsStore.getLastOpened(props.type))
 
 const updateCategories = () => {
   wallets.value = walletsStore.getWalletsByType(props.type)

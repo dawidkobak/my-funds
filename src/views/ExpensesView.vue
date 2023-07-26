@@ -5,7 +5,7 @@
     v-model="currentWallet"
     newWalletCaption="Stwórz nową listę wydatków"
   >
-    <div class="mt-10">
+    <div class="">
       <WalletMonthlyOutcomSummary :initial-data="currentWallet" />
     </div>
   </WalletsContainer>
@@ -20,9 +20,10 @@ import { useWalletsStore } from '../stores/walletsStore'
 
 const walletsStore = useWalletsStore()
 const expensessWallets = ref(walletsStore.getExpensesWallets)
+const lastOpened = ref(walletsStore.getLastOpened('Expenses'))
 
 const currentWallet = ref(
-  expensessWallets.value[0] ?? {
+  expensessWallets.value.find((el) => el.id === lastOpened.value) ?? {
     id: 'Wydatki demo',
     type: 'Expenses',
     data: [

@@ -3,10 +3,10 @@
     <div class="grid grid-cols-2">
       <div class="w-full">
         <div class="">
-          <div class="mt-10">
+          <div class="">
             <div class="grid grid-cols-2 text-3xl">
               <div class="text-left">Suma {{ walletTypeCaption }} wynosi:</div>
-              <div class="text-right mr-5">{{ total.toFixed(2) }}</div>
+              <div class="text-right mr-5">{{ userStore.formatter.format(total) }}</div>
             </div>
           </div>
           <div class="my-4">
@@ -31,6 +31,7 @@
               @color-updated="(e) => changeAssetColor(asset.id, e)"
               @text-updated="(e) => textUpdated(asset.id, e)"
               @subAmountsUpdated="(subAmounts) => subAmoumtUpdated(asset.id, subAmounts)"
+              :key="asset.id"
             />
           </div>
 
@@ -42,7 +43,7 @@
         </div>
       </div>
 
-      <div class="mt-10">
+      <div class="mt-10 w-11/12">
         <WalletChart :chart-data="chartData" />
       </div>
     </div>
@@ -51,11 +52,14 @@
 
 <script setup>
 import { computed, ref, toValue, watch } from 'vue'
+
 import WalletChart from './WalletChart.vue'
 import WalletAsset from '../wallet/WalletAsset.vue'
-import { useWalletsStore } from '../../stores/walletsStore'
 
+import { useWalletsStore } from '../../stores/walletsStore'
+import { useUserStore } from '../../stores/userStore'
 const walletStore = useWalletsStore()
+const userStore = useUserStore()
 
 const currentAssets = ref(toValue(props.initialData))
 

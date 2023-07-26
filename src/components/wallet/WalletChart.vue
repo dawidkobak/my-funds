@@ -1,5 +1,7 @@
 <template>
-  <Doughnut ref="chart" :data="props.chartData" :plugins="myPlugin" />
+  <div class="">
+    <Doughnut ref="chart" :data="props.chartData" :plugins="myPlugin" :options="config" />
+  </div>
 </template>
 
 <script setup>
@@ -28,6 +30,10 @@ const myPlugin = [
 ]
 
 const chart = ref(null)
+
+const config = {
+  radius: '75%'
+}
 
 const props = defineProps(['chartData'])
 </script>
