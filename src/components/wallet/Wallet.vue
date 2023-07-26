@@ -31,6 +31,7 @@
               @color-updated="(e) => changeAssetColor(asset.id, e)"
               @text-updated="(e) => textUpdated(asset.id, e)"
               @subAmountsUpdated="(subAmounts) => subAmoumtUpdated(asset.id, subAmounts)"
+              @assetDeleted="deleteAsset(asset.id)"
               :key="asset.id"
             />
           </div>
@@ -172,6 +173,13 @@ const subAmoumtUpdated = (assetId, subAmounts) => {
     asset.subAmounts = subAmounts
     emit('assetSubAmountsUpdated', assetId, subAmounts)
     walletStore.setLocalStorage()
+  }
+}
+
+const deleteAsset = (assetId) => {
+  const assetIndex = currentAssets.value.findIndex((a) => a.id === assetId)
+  if (assetIndex >= 0) {
+    currentAssets.value.splice(assetIndex, 1)
   }
 }
 
