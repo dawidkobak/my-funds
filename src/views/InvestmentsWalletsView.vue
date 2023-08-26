@@ -1,4 +1,5 @@
 <template>
+  <MainNav />
   <WalletsContainer
     label="Inwestycje"
     type="Investing"
@@ -26,6 +27,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 
+import MainNav from '../components/navigation/MainNav.vue'
 import Wallet from '../components/wallet/Wallet.vue'
 import AssetsSummary from '../components/functionalities/AssetsSummary.vue'
 import WalletsContainer from '../components/wallet/WalletsContainer.vue'

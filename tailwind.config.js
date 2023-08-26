@@ -49,7 +49,9 @@ module.exports = {
       'brand-orange-1': '#ffa500',
       'semi-05': 'rgba(0, 0, 0, 0.5)',
       'location-gray': 'rgb(10, 56, 71)',
-      'my-funds': '#342b84'
+      'my-funds': '#342b84',
+      facebook: '#0f90f2',
+      google: '#dc533b'
     }),
     columns: {
       auto: 'auto',

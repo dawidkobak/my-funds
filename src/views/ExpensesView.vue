@@ -1,4 +1,5 @@
 <template>
+  <MainNav />
   <WalletsContainer
     label="Wydatek"
     type="Expenses"
@@ -14,6 +15,7 @@
 <script setup>
 import { ref } from 'vue'
 
+import MainNav from '../components/navigation/MainNav.vue'
 import WalletsContainer from '../components/wallet/WalletsContainer.vue'
 import WalletMonthlyOutcomSummary from '../components/wallet/WalletMonthlyOutcomSummary.vue'
 import { useWalletsStore } from '../stores/walletsStore'

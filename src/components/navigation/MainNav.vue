@@ -12,7 +12,11 @@
       </div>
 
       <div class="menu">
-        <router-link to="/" class="button">
+        <router-link to="/transactions" class="button">
+          <span class="material-symbols-outlined"> payments </span>
+          <span class="text ml-5">Transakcje</span>
+        </router-link>
+        <router-link to="/investments" class="button">
           <span class="material-symbols-outlined"> trending_up </span>
           <span class="text ml-5">Inwestycje</span>
         </router-link>

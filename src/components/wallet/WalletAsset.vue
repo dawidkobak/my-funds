@@ -14,7 +14,7 @@
         v-model="amount"
         label="Wartość"
         prefix="PLN"
-        :rules="[rules.required, rules.money]"
+        :rules="[rules.money]"
         class="bg-white"
       />
     </div>
@@ -34,10 +34,10 @@
           <v-card-title class="text-h5"> Czy na pewno chcesz usunąć wydatek? </v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green-darken-1" variant="text" @click="confirmDeleteAssetVisible = false">
+            <v-btn color="red-darken-1" variant="text" @click="confirmDeleteAssetVisible = false">
               NIE
             </v-btn>
-            <v-btn color="green-darken-1" variant="text" @click="deleteAsset"> TAK </v-btn>
+            <v-btn color="red-darken-1" variant="text" @click="deleteAsset"> TAK </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -67,9 +67,9 @@
             v-model="subAmount.value"
             label="Wartość"
             prefix="PLN"
-            :rules="[rules.required, rules.money]"
+            :rules="[rules.money]"
             class="bg-white"
-            @update:modelValue="(value) => setSubAmount(value, index)"
+            @update:focused="setSubAmount(subAmount.value, index)"
           />
         </div>
       </div>
@@ -84,10 +84,10 @@
             <v-card-title class="text-h5"> Czy na pewno chcesz usunąć podwydatek? </v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green-darken-1" variant="text" @click="confirmDeleteVisible = false">
+              <v-btn color="red-darken-1" variant="text" @click="confirmDeleteVisible = false">
                 NIE
               </v-btn>
-              <v-btn color="green-darken-1" variant="text" @click="deleteSubAmount(index)">
+              <v-btn color="red-darken-1" variant="text" @click="deleteSubAmount(index)">
                 TAK
               </v-btn>
             </v-card-actions>
@@ -153,23 +153,15 @@ const text = ref(props.text)
 const confirmDeleteVisible = ref(false)
 const confirmDeleteAssetVisible = ref(false)
 
-// watch(props, () => {
-//   text.value = props.text
-//   color.value = props.color
-//   amount.value = props.amount
-// })
-
 watch(amount, () => {
   emit('amountUpdated', amount.value)
 })
 
 const setColor = (e) => {
-  //color.value = e
   emit('colorUpdated', e)
 }
 
 const setText = (e) => {
-  //text.value = e
   emit('textUpdated', e)
 }
 
@@ -207,7 +199,6 @@ const emit = defineEmits([
 ])
 
 const rules = {
-  required: (value) => !!value || 'Kwota jest wymagana.',
   money: (value) => {
     const str = value.toString()
     const pattern = /^-?(\d*([.,]\d{1,2})?$)/
