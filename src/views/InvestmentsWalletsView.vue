@@ -1,27 +1,31 @@
 <template>
   <MainNav />
-  <WalletsContainer
-    label="Inwestycje"
-    type="Investing"
-    v-model="currentWallet"
-    newWalletCaption="Stwórz nowy portfel"
-  >
-    <div class="my-5">
-      <AssetsSummary :funds-data="fundsData" :total="total" />
-    </div>
+  <div class="ml-120">
+    <WalletsContainer
+      label="Inwestycje"
+      type="Investing"
+      v-model="currentWallet"
+      newWalletCaption="Stwórz nowy portfel"
+    >
+      <div class="my-5">
+        <AssetsSummary :funds-data="fundsData" :total="total" />
+      </div>
 
-    <div class="mt-10">
-      <Wallet
-        :wallet-name="currentWallet.id"
-        :initial-data="currentWallet.data"
-        addAnotherAssetCaption="Dodaj kolejne aktywo"
-        @asset-caption-changed="(e) => changeAssetCaption(currentWallet.data, e)"
-        @asset-amount-changed="(e) => changeAssetAmount(currentWallet.data, e)"
-        @asset-color-changed="(e) => changeAssetColor(currentWallet.data, e)"
-        @asset-text-updated="(assetId, text) => changeAssetText(currentWallet.data, assetId, text)"
-      />
-    </div>
-  </WalletsContainer>
+      <div class="mt-10">
+        <Wallet
+          :wallet-name="currentWallet.id"
+          :initial-data="currentWallet.data"
+          addAnotherAssetCaption="Dodaj kolejne aktywo"
+          @asset-caption-changed="(e) => changeAssetCaption(currentWallet.data, e)"
+          @asset-amount-changed="(e) => changeAssetAmount(currentWallet.data, e)"
+          @asset-color-changed="(e) => changeAssetColor(currentWallet.data, e)"
+          @asset-text-updated="
+            (assetId, text) => changeAssetText(currentWallet.data, assetId, text)
+          "
+        />
+      </div>
+    </WalletsContainer>
+  </div>
 </template>
 
 <script setup>

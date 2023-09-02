@@ -1,15 +1,17 @@
 <template>
   <MainNav />
-  <WalletsContainer
-    label="Wydatek"
-    type="Expenses"
-    v-model="currentWallet"
-    newWalletCaption="Stwórz nową listę wydatków"
-  >
-    <div class="">
-      <WalletMonthlyOutcomSummary :initial-data="currentWallet" />
-    </div>
-  </WalletsContainer>
+  <div class="ml-120">
+    <WalletsContainer
+      label="Wydatek"
+      type="Expenses"
+      v-model="currentWallet"
+      newWalletCaption="Stwórz nową listę wydatków"
+    >
+      <div class="">
+        <WalletMonthlyOutcomSummary :initial-data="currentWallet" />
+      </div>
+    </WalletsContainer>
+  </div>
 </template>
 
 <script setup>

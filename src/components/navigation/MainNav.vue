@@ -1,41 +1,70 @@
 <template>
-  <div class="w-1/4">
-    <aside :class="`${is_expanded ? 'is-expanded' : ''}`" class="">
+  <div class="w-1/4 fixed">
+    <aside :class="`${is_expanded ? 'is-expanded' : ''}`" class="border-r-2 mr-4">
       <div class="logo">
         <img :src="logoURL" alt="Vue" />
       </div>
 
-      <div class="menu-toggle-wrap">
+      <!-- <div class="menu-toggle-wrap">
         <button class="menu-toggle" @click="ToggleMenu">
           <span class="material-symbols-outlined">keyboard_double_arrow_right</span>
         </button>
-      </div>
+      </div> -->
 
       <div class="menu">
-        <router-link to="/transactions" class="button">
-          <span class="material-symbols-outlined"> payments </span>
-          <span class="text ml-5">Transakcje</span>
-        </router-link>
-        <router-link to="/investments" class="button">
-          <span class="material-symbols-outlined"> trending_up </span>
-          <span class="text ml-5">Inwestycje</span>
-        </router-link>
-        <router-link to="/expenses" class="button">
-          <span class="material-symbols-outlined"> receipt_long </span>
-          <span class="text ml-5">Wydatki</span>
-        </router-link>
-        <router-link to="/charts" class="button">
-          <span class="material-symbols-outlined"> query_stats </span>
-          <span class="text ml-5">Notowania</span>
-        </router-link>
+        <div
+          class="border-y-2 border-my-funds hover:bg-gray-400"
+          :class="setCurrentStyles('/transactions')"
+        >
+          <router-link to="/transactions" class="button">
+            <span class="material-symbols-outlined"> payments </span>
+            <span class="text ml-5">Transakcje inwestycyjne</span>
+          </router-link>
+        </div>
+        <div
+          class="border-b-2 border-my-funds hover:bg-gray-400"
+          :class="setCurrentStyles('/investments')"
+        >
+          <router-link to="/investments" class="button">
+            <span class="material-symbols-outlined"> trending_up </span>
+            <span class="text ml-5">Monitorowanie inwestycji</span>
+          </router-link>
+        </div>
+        <div
+          class="border-b-2 border-my-funds hover:bg-gray-400"
+          :class="setCurrentStyles('/expenses')"
+        >
+          <router-link to="/expenses" class="button">
+            <span class="material-symbols-outlined"> receipt_long </span>
+            <span class="text ml-5">Wydatki</span>
+          </router-link>
+        </div>
+        <div
+          class="border-b-2 border-my-funds hover:bg-gray-400"
+          :class="setCurrentStyles('/charts')"
+        >
+          <router-link to="/charts" class="button">
+            <span class="material-symbols-outlined"> query_stats </span>
+            <span class="text ml-5">Notowania</span>
+          </router-link>
+        </div>
+        <div
+          class="border-b-2 border-my-funds hover:bg-gray-400"
+          :class="setCurrentStyles('/settings')"
+        >
+          <router-link to="/settings" class="button">
+            <span class="material-symbols-outlined"> settings </span>
+            <span class="text ml-5">Ustawienia</span>
+          </router-link>
+        </div>
       </div>
 
       <div class="flex"></div>
 
-      <div class="menu">
-        <router-link to="/settings" class="button">
-          <span class="material-symbols-outlined">settings</span>
-          <span class="text ml-5">Settings</span>
+      <div class="menu bg-gray-200 border-y-2 border-my-funds hover:bg-gray-400">
+        <router-link to="/auth" class="button">
+          <span class="material-symbols-outlined">logout</span>
+          <span class="text ml-5">Wyloguj się</span>
         </router-link>
       </div>
     </aside>
@@ -43,10 +72,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import logoURL from '/logo.jpg'
+import { computed, ref } from 'vue'
+import logoURL from '/logo.png'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const is_expanded = ref(true)
+
+const tabs = ['/transactions', '/investments', '/expenses', '/charts', '/settings']
+
+const actualTab = computed(() => {
+  if (tabs.includes(router.currentRoute.value.path)) return router.currentRoute.value.path
+  return '/investments'
+})
+
+const setCurrentStyles = (tabName) => {
+  if (actualTab.value == tabName) {
+    return 'bg-brand-gray-3'
+  }
+  return 'bg-gray-200'
+}
 
 const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value

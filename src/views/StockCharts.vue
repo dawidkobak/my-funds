@@ -1,13 +1,15 @@
 <template>
   <MainNav />
-  <main class="flex w-3/4 items-center">
-    <div class="w-full mx-auto">
-      <div class="mt-5"></div>
-      <div class="mt-10">
-        <StockChart />
+  <div class="ml-120">
+    <main class="flex w-full items-center">
+      <div class="w-full mx-auto">
+        <div class="mt-5"></div>
+        <div class="mt-10">
+          <StockChart />
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script setup>

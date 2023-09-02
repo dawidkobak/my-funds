@@ -1,5 +1,5 @@
 <template>
-  <main class="w-3/4 items-center">
+  <main class="w-full items-center">
     <div class="w-full mx-auto">
       <div class="mt-5">
         <v-combobox

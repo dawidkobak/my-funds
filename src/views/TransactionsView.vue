@@ -1,6 +1,6 @@
 <template>
   <MainNav />
-  <div>Transakcje</div>
+  <div class="ml-120">Transakcje</div>
   <v-date-picker elevation="24"></v-date-picker>
 </template>
 

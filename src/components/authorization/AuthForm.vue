@@ -1,9 +1,9 @@
 <template>
   <div class="flex mx-auto">
     <div class="">
-      <v-img class="mx-auto my-6" src="/logo.jpg"></v-img>
+      <v-img class="mx-auto my-6" src="/logo.png"></v-img>
 
-      <span class="font-bold text-4xl text-center">Zaloguj się do My Funds</span>
+      <p class="font-bold text-4xl text-center">Zaloguj się do My Funds</p>
 
       <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
         <div class="text-subtitle-1 text-medium-emphasis">Login</div>
@@ -18,13 +18,13 @@
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
           Hasło
 
-          <router-link to="/rememberPassword" class="button">
+          <router-link to="/reset-password" class="button">
             <span class="text-sm ml-5 text-blue-500">Nie pamiętam hasła</span>
           </router-link>
         </div>
 
         <v-text-field
-          :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
           density="compact"
           placeholder="Wprowadź hasło"
@@ -33,7 +33,9 @@
           @click:append-inner="visible = !visible"
         ></v-text-field>
 
-        <v-btn block class="mb-4" color="blue" size="large" variant="tonal"> Zaloguj się </v-btn>
+        <router-link to="/investments">
+          <v-btn block class="mb-4" color="blue" size="large" variant="tonal"> Zaloguj się </v-btn>
+        </router-link>
 
         <div className="relative flex justify-center text-sm mb-4">
           <span className="bg-white px-2 text-gray-500 text-subtitle-1 text-medium-emphasis">

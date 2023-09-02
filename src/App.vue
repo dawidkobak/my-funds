@@ -5,7 +5,7 @@ import { RouterView } from 'vue-router'
 <template>
   <div id="app">
     <div class="w-full">
-      <div class="w-full flex">
+      <div class="flex flex-col">
         <RouterView />
       </div>
     </div>
