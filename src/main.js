@@ -11,18 +11,25 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-// import DateFnsAdapter from '@date-io/date-fns'
-// import plPL from '@date-io/date-fns/locale/plPL'
+import { VDatePicker } from 'vuetify/labs/VDatePicker'
+import pl from 'date-fns/locale/pl/index'
+import DateFnsAdapter from '@date-io/date-fns'
 
 const vuetify = createVuetify({
-  components,
-  directives
-  // date: {
-  //   adapter: DateFnsAdapter,
-  //   locale: {
-  //     pl: plPL
-  //   }
-  // }
+  components: {
+    ...components,
+    VDatePicker
+  },
+  directives,
+  locale: {
+    messages: { pl }
+  },
+  date: {
+    adapter: DateFnsAdapter,
+    locale: {
+      pl: pl
+    }
+  }
 })
 
 import App from './App.vue'

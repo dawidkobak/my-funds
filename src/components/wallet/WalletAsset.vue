@@ -1,5 +1,7 @@
 <template>
   <div class="flex w-full">
+    <DatePicker v-if="props.withSubAmounts" />
+
     <div class="w-3/12">
       <v-text-field
         v-model="text"
@@ -23,7 +25,7 @@
       <MyColorPicker :pure-color="currentColor" @colorUpdated="setColor" />
     </div>
 
-    <div class="w-1/12 ml-3">
+    <div v-if="props.withSubAmounts" class="w-1/12 ml-3">
       <v-dialog v-model="confirmDeleteAssetVisible" persistent width="auto">
         <template v-slot:activator="{ props }">
           <v-btn color="#d81b43" v-bind="props" class="text-white delete-sub-amount">
@@ -44,15 +46,18 @@
     </div>
 
     <div class="w-3/12">
-      <div v-if="props.withSubAmounts">
+      <div v-if="props.withSubAmounts && props.subAmounts.length === 0">
         <v-btn color="#342b84" class="text-white"> Podziel wydatek </v-btn>
       </div>
     </div>
   </div>
   <div v-if="props.withSubAmounts">
     <div class="flex w-full" v-for="(subAmount, index) in subAmounts" :key="index">
+      <div class="ml-6 my-auto">
+        <DatePicker />
+      </div>
       <div class="w-4/12">
-        <div class="ml-6">
+        <div class="">
           <v-text-field
             v-model="subAmount.text"
             label="Nazwa podwydatku"
@@ -95,7 +100,7 @@
         </v-dialog>
       </div>
     </div>
-    <div class="ml-6">
+    <div v-if="props.subAmounts.length > 0" class="ml-6">
       <v-btn color="#342b84" class="text-white" @click="addSubAmount">
         Dodaj kolejną pozycję
       </v-btn>
@@ -107,6 +112,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import MyColorPicker from '../shared/MyColorPicker.vue'
+import DatePicker from '../shared/DatePicker.vue'
 
 const props = defineProps({
   id: {

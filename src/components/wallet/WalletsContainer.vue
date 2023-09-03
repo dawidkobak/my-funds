@@ -11,6 +11,14 @@
       <div>
         <WalletCreator :type="props.type" @walletCreated="updateCategories" />
       </div>
+      <div v-if="props.type === 'Expenses'" class="text-center mt-10">
+        <v-btn color="#342b84" class="text-white mr-3">
+          <v-icon start icon="mdi-file-import"></v-icon> Import z pliku CSV
+        </v-btn>
+        <v-btn color="#342b84" class="text-white">
+          <v-icon start icon="mdi-file-export"></v-icon> Eksport do pliku CSV
+        </v-btn>
+      </div>
       <div class="mt-10">
         <slot></slot>
       </div>

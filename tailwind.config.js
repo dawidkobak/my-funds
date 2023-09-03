@@ -51,7 +51,8 @@ module.exports = {
       'location-gray': 'rgb(10, 56, 71)',
       'my-funds': '#342b84',
       facebook: '#0f90f2',
-      google: '#dc533b'
+      google: '#dc533b',
+      'selected-tab': '#3727db'
     }),
     columns: {
       auto: 'auto',

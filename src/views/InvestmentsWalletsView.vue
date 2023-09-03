@@ -11,6 +11,19 @@
         <AssetsSummary :funds-data="fundsData" :total="total" />
       </div>
 
+      <div class="flex">
+        <v-responsive class="" max-width="200">
+          <v-text-field
+            v-model="date"
+            label="Data notowania"
+            :rules="[rules.date]"
+            placehodler="dd/mm/yyyy"
+            class="bg-white w-fit-content"
+          />
+        </v-responsive>
+        <v-btn color="#342b84" class="text-white delete-sub-amount my-auto ml-10"> Zastosuj </v-btn>
+      </div>
+
       <div class="mt-10">
         <Wallet
           :wallet-name="currentWallet.id"
@@ -55,6 +68,16 @@ const currentWallet = ref(
     ]
   }
 )
+
+const date = ref(new Date().toLocaleDateString('en-GB'))
+const rules = {
+  date: (value) => {
+    const str = value.toString()
+    const pattern =
+      /^(?:(?:(?:0?[13578]|1[02])(\/|-|\.)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/|-|\.)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/|-|\.)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/|-|\.)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/
+    return pattern.test(str) || 'Nieprawidłowa data'
+  }
+}
 
 const fundsData = ref(investsmentsWallets.value.flatMap((wallet) => wallet.data))
 
