@@ -41,9 +41,9 @@
         </div>
         <div
           class="border-b-2 border-my-funds hover:bg-gray-400"
-          :class="setCurrentStyles('/charts')"
+          :class="setCurrentStyles('/stock-quotes')"
         >
-          <router-link to="/charts" class="button">
+          <router-link to="/stock-quotes" class="button">
             <span class="material-symbols-outlined"> query_stats </span>
             <span class="text ml-5">Notowania</span>
           </router-link>
@@ -80,7 +80,7 @@ const router = useRouter()
 
 const is_expanded = ref(true)
 
-const tabs = ['/transactions', '/investments', '/expenses', '/charts', '/settings']
+const tabs = ['/transactions', '/investments', '/expenses', '/stock-quotes', '/settings']
 
 const actualTab = computed(() => {
   if (tabs.includes(router.currentRoute.value.path)) return router.currentRoute.value.path

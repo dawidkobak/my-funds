@@ -5,7 +5,7 @@
       label="Inwestycje"
       type="Investing"
       v-model="currentWallet"
-      newWalletCaption="Stwórz nowy portfel"
+      newWalletCaption="Utwórz nowy portfel"
     >
       <div class="my-5">
         <AssetsSummary :funds-data="fundsData" :total="total" />

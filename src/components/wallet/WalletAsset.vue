@@ -5,7 +5,7 @@
     <div class="w-3/12">
       <v-text-field
         v-model="text"
-        label="Nazwa aktywa"
+        label="Nazwa wydatku"
         class="bg-white"
         @update:modelValue="setText"
       />

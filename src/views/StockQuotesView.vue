@@ -14,19 +14,14 @@
         <div>
           <v-card>
             <v-tabs bg-color="#7e75e0" color="#eeeeee" align-tabs="center" v-model="currentTab">
-              <v-tab :class="setTabStyles(0)">7D</v-tab>
-              <v-tab :class="setTabStyles(1)">1M</v-tab>
-              <v-tab :class="setTabStyles(2)">3M</v-tab>
-              <v-tab :class="setTabStyles(3)">6M</v-tab>
-              <v-tab :class="setTabStyles(4)">YTD</v-tab>
-              <v-tab :class="setTabStyles(5)">1R</v-tab>
-              <v-tab :class="setTabStyles(6)">5L</v-tab>
-              <v-tab :class="setTabStyles(7)">Maks.</v-tab>
+              <v-tab v-for="(period, index) in periods" :key="index" :class="setTabStyles(index)">{{
+                period
+              }}</v-tab>
             </v-tabs>
           </v-card>
         </div>
         <div class="mt-10">
-          <StockChart />
+          <StockChart :period="periods[currentTab]" />
         </div>
       </div>
     </main>
@@ -40,12 +35,10 @@ import { ref } from 'vue'
 import { useStocksStore } from '../stores/stocksStore'
 
 const stocksStore = useStocksStore()
-
 const assets = stocksStore.stocksNames
-
 const currentAsset = ref('Bitcoin')
-
 const currentTab = ref(5)
+const periods = ['7D', '1M', '3M', '6M', 'YTD', '1R', '5L', 'Maks']
 
 const setTabStyles = (index) => {
   if (currentTab.value == index) {

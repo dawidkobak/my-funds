@@ -6,6 +6,12 @@
       <p class="font-bold text-4xl text-center">Zaloguj się do My Funds</p>
 
       <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+        <v-card v-if="error.length > 0" class="mb-12" color="red" variant="tonal">
+          <v-card-text class="text-medium-emphasis text-caption">
+            Nieprawidłowy login lub hasło.
+          </v-card-text>
+        </v-card>
+
         <div class="text-subtitle-1 text-medium-emphasis">Login</div>
 
         <v-text-field
@@ -13,6 +19,7 @@
           placeholder="Adres email"
           prepend-inner-icon="mdi-email-outline"
           variant="outlined"
+          v-model="userName"
         ></v-text-field>
 
         <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -24,18 +31,19 @@
         </div>
 
         <v-text-field
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
+          :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="passwordVisible ? 'text' : 'password'"
           density="compact"
           placeholder="Wprowadź hasło"
           prepend-inner-icon="mdi-lock-outline"
           variant="outlined"
-          @click:append-inner="visible = !visible"
+          @click:append-inner="passwordVisible = !passwordVisible"
+          v-model="password"
         ></v-text-field>
 
-        <router-link to="/investments">
-          <v-btn block class="mb-4" color="blue" size="large" variant="tonal"> Zaloguj się </v-btn>
-        </router-link>
+        <v-btn block class="mb-4" color="blue" size="large" variant="tonal" @click="login()">
+          Zaloguj się
+        </v-btn>
 
         <div className="relative flex justify-center text-sm mb-4">
           <span className="bg-white px-2 text-gray-500 text-subtitle-1 text-medium-emphasis">
@@ -73,5 +81,29 @@
 
 <script setup>
 import { ref } from 'vue'
-const visible = ref(false)
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../../stores/userStore'
+
+const router = useRouter()
+const userStore = useUserStore()
+
+const passwordVisible = ref(false)
+
+const userName = ref('')
+const password = ref('')
+
+const error = ref('')
+
+async function login() {
+  const auth = userStore.authentication
+  auth
+    .login({ email: userName.value, password: password.value })
+    .then(() => {
+      auth.getCurrentUser()
+      router.push({ name: 'investments' })
+    })
+    .catch((err) => {
+      error.value = err.message
+    })
+}
 </script>

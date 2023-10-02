@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import InvestmentsWalletsView from '../views/InvestmentsWalletsView.vue'
 import ExpensesView from '../views/ExpensesView.vue'
-import StockCharts from '../views/StockCharts.vue'
+import StockQuotesView from '../views/StockQuotesView.vue'
 import TransactionsView from '../views/TransactionsView.vue'
 import AuthorizationView from '../views/AuthorizationView.vue'
 import ResetPasswordView from '../views/ResetPasswordView.vue'
@@ -20,6 +20,11 @@ const router = createRouter({
       component: AuthorizationView
     },
     {
+      path: '/investments',
+      name: 'investments',
+      component: InvestmentsWalletsView
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'home',
       component: InvestmentsWalletsView
@@ -29,16 +34,12 @@ const router = createRouter({
       component: TransactionsView
     },
     {
-      path: '/charts',
-      component: StockCharts
-    },
-    {
       path: '/expenses',
       component: ExpensesView
     },
     {
-      path: '/charts',
-      component: StockCharts
+      path: '/stock-quotes',
+      component: StockQuotesView
     },
     {
       path: '/reset-password',

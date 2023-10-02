@@ -17,5 +17,6 @@ import { RouterView } from 'vue-router'
   width: 100%;
   min-height: 100vh;
   background-image: url('./assets/money.jpg');
+  background-repeat: repeat-y;
 }
 </style>

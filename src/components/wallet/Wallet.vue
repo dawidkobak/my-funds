@@ -5,19 +5,19 @@
         <div class="">
           <div class="">
             <div class="grid grid-cols-2 text-3xl">
-              <div class="text-left">Suma {{ walletTypeCaption }} wynosi:</div>
-              <div class="text-right mr-5">{{ userStore.formatter.format(total) }}</div>
+              <p class="text-left">Suma {{ walletTypeCaption }} wynosi:</p>
+              <p class="text-right mr-5">{{ userStore.formatter.format(total) }}</p>
             </div>
           </div>
           <div class="my-4">
             <div class="grid grid-cols-1">
               <div class="w-full">
-                <div class="text-4xl text-center">{{ props.walletName }}</div>
+                <h2 class="text-4xl text-center">{{ props.walletName }}</h2>
               </div>
             </div>
           </div>
 
-          <div v-for="asset in currentAssets" :key="asset.caption" class="mt-3">
+          <div v-for="asset in currentAssets" :key="asset.id" class="mt-3">
             <WalletAsset
               :id="asset.id"
               :amount="asset.amount"
@@ -36,8 +36,8 @@
             />
           </div>
 
-          <div class="mt-4 ml-1 hover:cursor-pointer max-w-min" @click="addAsset">
-            <v-btn color="#342b84" class="text-white" v-bind="props">
+          <div class="mt-4 ml-1 hover:cursor-pointer max-w-min">
+            <v-btn color="#342b84" class="text-white" @click="addAsset">
               {{ addAnotherAssetCaption }}
             </v-btn>
           </div>

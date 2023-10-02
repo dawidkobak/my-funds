@@ -8,7 +8,7 @@
   >
     <span class="material-symbols-sharp"> check_circle </span>
 
-    <h2 class="text-h5 mb-6">Portfel stworzony</h2>
+    <h2 class="text-h5 mb-6">Portfel utworzony</h2>
 
     <p class="mb-4 text-medium-emphasis text-body-2">Możesz wybrać go z listy u góry</p>
 

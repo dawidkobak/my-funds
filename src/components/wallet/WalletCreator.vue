@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent width="1024">
       <template v-slot:activator="{ props }" v-if="creationStep">
         <v-btn color="#342b84" class="text-white" v-bind="props">
-          Stwórz {{ createWalletCaption }}
+          Utwórz {{ createWalletCaption }}
         </v-btn>
       </template>
       <v-card v-if="creationStep">
@@ -30,7 +30,7 @@
           <v-btn color="blue-darken-1" variant="text" @click="creationStep = false">
             Zamknij
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="createWallet"> Stwórz </v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="createWallet"> Utwórz </v-btn>
         </v-card-actions>
       </v-card>
       <WalletCreatorNotification v-if="!creationStep" @close="dialog = false" />

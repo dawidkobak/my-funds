@@ -57,7 +57,7 @@ const currentWallet = ref(
             value: 200.0
           }
         ],
-        color: 'rgb(142, 36, 170)',
+        color: 'rgb(37, 150, 190)',
         text: 'mieszkanie'
       }
     ]
