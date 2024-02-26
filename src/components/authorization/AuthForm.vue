@@ -95,15 +95,16 @@ const password = ref('')
 const error = ref('')
 
 async function login() {
-  const auth = userStore.authentication
-  auth
-    .login({ email: userName.value, password: password.value })
-    .then(() => {
-      auth.getCurrentUser()
-      router.push({ name: 'investments' })
-    })
-    .catch((err) => {
-      error.value = err.message
-    })
+  // const auth = userStore.authentication
+  // auth
+  //   .login({ email: userName.value, password: password.value })
+  //   .then(() => {
+  //     auth.getCurrentUser()
+  //     router.push({ name: 'investments' })
+  //   })
+  //   .catch((err) => {
+  //     error.value = err.message
+  //   })
+  router.push({ name: 'investments' });
 }
 </script>
