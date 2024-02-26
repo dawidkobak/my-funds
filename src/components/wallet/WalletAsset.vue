@@ -47,7 +47,7 @@
 
     <div class="w-3/12">
       <div v-if="props.withSubAmounts && props.subAmounts.length === 0">
-        <v-btn color="#342b84" class="text-white"> Podziel wydatek </v-btn>
+        <v-btn @click="divideExpense(props.id)" color="#342b84" class="text-white"> Podziel wydatek </v-btn>
       </div>
     </div>
   </div>
@@ -222,6 +222,10 @@ const deleteSubAmount = (index) => {
 const deleteAsset = () => {
   confirmDeleteAssetVisible.value = false
   emit('assetDeleted')
+}
+
+const divideExpense = (id) => {
+  addSubAmount()
 }
 </script>
 

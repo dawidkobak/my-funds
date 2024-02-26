@@ -7,6 +7,7 @@ import AuthorizationView from '../views/AuthorizationView.vue'
 import ResetPasswordView from '../views/ResetPasswordView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import SettingsView from '../views/SettingsView.vue'
+import PiggyBanksView from '../views/PiggyBanksView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,10 @@ const router = createRouter({
     {
       path: '/settings',
       component: SettingsView
+    },
+    {
+      path: '/piggy-banks',
+      component: PiggyBanksView
     }
   ]
 })
